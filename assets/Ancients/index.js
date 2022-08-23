@@ -10,4 +10,4 @@ const ancients = {
   shubNiggurath
 }
 
-export default ancients
+export default ancients ;
