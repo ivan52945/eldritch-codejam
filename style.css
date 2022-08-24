@@ -9,7 +9,12 @@
   width: 40%;
 }
 .wrapper__level {
+  width: 100%;
+}
+.wrapper__menu {
   width: 25%;
+  height: 100%;
+  border: 1px solid burlywood;
 }
 
 .ancient-field {
@@ -17,6 +22,8 @@
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
   border: 1px solid burlywood;
 }
 .ancient-field__ancient-card {
@@ -32,18 +39,22 @@
   z-index: 2;
   transform: scale(1.5);
 }
+.ancient-field__ancient-card.active {
+  border: 2px solid red;
+}
 
 .level {
   padding: 1%;
-  border: 1px solid burlywood;
   font-size: 40px;
   color: blanchedalmond;
   list-style-type: none;
 }
 .level__name {
   width: 100%;
-  border-color: burlywood;
-  border-bottom: 1px;
+  border-bottom: 1px solid rgba(222, 184, 135, 0);
+}
+.level__name.active {
+  border-bottom: 1px solid burlywood;
 }
 
 * {
