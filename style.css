@@ -6,15 +6,27 @@
   justify-content: start;
 }
 .wrapper__ancient-field {
-  width: 40%;
+  width: 39%;
+}
+.wrapper__menu {
+  width: 22%;
+  height: 100%;
+  border: 1px solid burlywood;
 }
 .wrapper__level {
   width: 100%;
 }
-.wrapper__menu {
-  width: 25%;
-  height: 100%;
+.wrapper__mysthic-card-field {
+  flex-grow: 1;
+}
+
+.mysthic-card-field {
   border: 1px solid burlywood;
+}
+
+.button {
+  width: 100%;
+  height: 40px;
 }
 
 .ancient-field {
@@ -45,7 +57,7 @@
 
 .level {
   padding: 1%;
-  font-size: 40px;
+  font-size: 30px;
   color: blanchedalmond;
   list-style-type: none;
 }
@@ -55,6 +67,39 @@
 }
 .level__name.active {
   border-bottom: 1px solid burlywood;
+}
+
+.mysthic-card-field {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.mysthic-card-field__card-list {
+  width: 50%;
+  font-size: 30px;
+}
+.mysthic-card-field__card-number {
+  width: 100%;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+.mysthic-card-field__card {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 60px;
+}
+.mysthic-card-field .card-green {
+  background-color: green;
+}
+.mysthic-card-field .card-yellow {
+  background-color: yellow;
+}
+.mysthic-card-field .card-blue {
+  background-color: blue;
 }
 
 * {

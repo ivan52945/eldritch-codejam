@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,6 +8,7 @@
 	<link href="./style.css" rel="stylesheet">
 	<title>Eldritch Horror</title>
 </head>
+
 <body>
 	<div class="wrapper">
 		<div class="wrapper__ancient-field ancient-field">
@@ -14,11 +16,32 @@
 		<div class="wrapper__menu">
 			<ul class="wrapper__level level">
 			</ul>
+			<button class="button">Сгенерировать колоду</button>
 		</div>
 		<div class="wrapper__mysthic-card-field mysthic-card-field">
-
+			<div class="mysthic-card-field__card-list">
+				1 Этап
+				<div class="mysthic-card-field__card-number">
+					<div class="mysthic-card-field__card card-green" data-id="0" data-color="green">1</div>
+					<div class="mysthic-card-field__card card-yellow" data-id="0" data-color="brown">2</div>
+					<div class="mysthic-card-field__card card-blue" data-id="0" data-color="blue">3</div>
+				</div>
+				2 Этап
+				<div class="mysthic-card-field__card-number">
+					<div class="mysthic-card-field__card card-green" data-id="1" data-color="green"></div>
+					<div class="mysthic-card-field__card card-yellow" data-id="1" data-color="brown"></div>
+					<div class="mysthic-card-field__card card-blue" data-id="1" data-color="blue"></div>
+				</div>
+				3 Этап
+				<div class="mysthic-card-field__card-number">
+					<div class="mysthic-card-field__card card-green" data-id="2" data-color="green"></div>
+					<div class="mysthic-card-field__card card-yellow" data-id="2" data-color="brown"></div>
+					<div class="mysthic-card-field__card card-blue" data-id="2" data-color="blue"></div>
+				</div>
+			</div>
 		</div>
 	</div>
 	<script type="module" src="./dist/main.js"></script>
 </body>
+
 </html>

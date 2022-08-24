@@ -8,19 +8,31 @@
 	justify-content: start;
 
 	&__ancient-field{
-		width: 40%;
-
-	}
-	&__level{
-			width: 100%;
+		width: 39%;
 	}
 	&__menu{
-		width: 25%;
+		width: 22%;
 		height: 100%;
 
 		border: 1px solid burlywood;
 	}
+	&__level{
+		width: 100%;
+	}
 
+	&__mysthic-card-field{
+		flex-grow: 1;
+	}
+
+}
+
+.mysthic-card-field{
+	border: 1px solid burlywood;
+}
+
+.button{
+	width: 100%;
+	height: 40px;
 }
 
 .ancient-field{
@@ -44,8 +56,6 @@
 
 		position: relative;
 		top:0; left:0;
-
-
 	}
 	&__ancient-card:hover{
 		z-index: 2;
@@ -60,7 +70,7 @@
 .level{
 	padding: 1%;
 			
-	font-size: 40px;
+	font-size: 30px;
 	color: blanchedalmond;
 			
 	list-style-type: none;
@@ -71,6 +81,46 @@
 	}
 	&__name.active{
 		border-bottom: 1px solid burlywood;
+	}
+}
+
+.mysthic-card-field{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+	&__card-list{
+		width: 50%;
+
+		font-size: 30px;
+	}
+	&__card-number{
+		width: 100%;
+
+		margin-bottom: 20px;
+
+		display: flex;
+		justify-content: space-between;
+	}
+	&__card{
+		$diametr: 60px;
+
+		width: $diametr;
+		height: $diametr;
+		border-radius: 50%;
+
+		text-align: center;
+		line-height: $diametr;
+	}
+	.card-green{
+		background-color: green;
+	}
+	.card-yellow{
+		background-color: yellow;
+	}
+	.card-blue{
+		background-color: blue;
 	}
 }
 
