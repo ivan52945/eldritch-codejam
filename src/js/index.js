@@ -46,8 +46,7 @@ ancientsData.forEach((element, id) => {
 });
 
 let activeAncientTag = null;
-
-ancientField.addEventListener("click", function (event) {
+ancientField.addEventListener("click", function selectAncient(event) {
 	if (event.target.tagName == "IMG") {
 		activeAncientTag?.classList.remove("active");
 		activeAncientTag = event.target;
@@ -56,7 +55,6 @@ ancientField.addEventListener("click", function (event) {
 });
 
 const levelList = document.querySelector('.level');
-
 difficulties.forEach((element) => {
 	const levelTitle = document.createElement("li");
 	levelTitle.textContent = element.name;
@@ -66,8 +64,7 @@ difficulties.forEach((element) => {
 });
 
 let activeLevel = null;
-
-levelList.addEventListener("click", function (event) {
+levelList.addEventListener("click", function selectLevel(event) {
 	if (event.target.tagName == "LI") {
 		activeLevel?.classList.remove("active");
 		activeLevel = event.target;
