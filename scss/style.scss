@@ -85,6 +85,7 @@
 }
 
 .mysthic-card-field{
+	height: 100%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -128,12 +129,14 @@
 	}
 	&__card-field{
 		width: 100%;
-
+		height: 40%;
 		display: flex;
 		justify-content: space-between;
 	}
 	&__card{
 		border-radius: 16px;
+
+
 	}
 }
 
