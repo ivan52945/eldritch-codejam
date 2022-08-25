@@ -8,7 +8,7 @@
 	justify-content: start;
 
 	&__ancient-field{
-		width: 39%;
+		width: 40%;
 	}
 	&__menu{
 		width: 22%;
@@ -90,8 +90,12 @@
 	align-items: center;
 	justify-content: center;
 
-	&__card-list{
+	padding:30px;
+
+	&__card-number-list{
 		width: 50%;
+
+		margin-bottom: 50px;
 
 		font-size: 30px;
 	}
@@ -103,7 +107,7 @@
 		display: flex;
 		justify-content: space-between;
 	}
-	&__card{
+	&__card-counter{
 		$diametr: 60px;
 
 		width: $diametr;
@@ -121,6 +125,15 @@
 	}
 	.card-blue{
 		background-color: blue;
+	}
+	&__card-field{
+		width: 100%;
+
+		display: flex;
+		justify-content: space-between;
+	}
+	&__card{
+		border-radius: 16px;
 	}
 }
 

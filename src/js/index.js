@@ -20,12 +20,20 @@ const cardList = {
 	},
 };
 
+const cardNumberOutputDiv = document.querySelectorAll('.mysthic-card-field__card-counter ');
+
+const cardNumberOutput = {};
+
+cardNumberOutputDiv.forEach(function (cardCount) { 
+	cardNumberOutput[`${cardCount.dataset.id} ${cardCount.dataset.color}`] = cardCount;
+	cardCount.textContent = 0;
+})
+
 let cards = [...brownCards, ...blueCards, ...greenCards];
 
 cards.forEach(function (card) {
 	cardList[card.color][card.difficulty].push(card);
 });
-
 
 
 const ancientField = document.querySelector('.ancient-field');
@@ -73,14 +81,34 @@ function randomInteger(min, max) {
 	return Math.round(rand);
 }
 
-
+function shuffle(array) {
+	for (let i = array.length - 1; i > 0; i--) {
+		let j = Math.floor(Math.random() * (i + 1));
+		[array[i], array[j]] = [array[j], array[i]];
+	}
+}
 
 const button = document.querySelector(".button");
+
+let outputCardStageList = [];
+let stage = 0;
+let cardIndex = 0;
+
+const card = document.querySelector(".mysthic-card-field__card-field");
+
+const cardClosed = document.querySelector(".card-closed");
+const cardOpened = document.querySelector(".card-opened");
 
 button.addEventListener("click", function () {
 	if (!activeAncientTag || !activeLevel) { return; }
 
 	const activeAncient = ancientsData[activeAncientTag.dataset.id];
+
+	activeAncient.stages.forEach(function (stage, index) { 
+		for (let color in stage) { 
+			cardNumberOutput[`${index} ${color}`].textContent = stage[color];
+		}
+	});
 
 	const nedeedCard = {};
 
@@ -105,9 +133,43 @@ button.addEventListener("click", function () {
 				outputCardList[key] = [...outputCardList[key], ...addCard];
 			}
 		}
-		console.log(outputCardList);
+
 	}
 
+	const outputCardStageListIn = []
+
+	activeAncient.stages.forEach(function (colorList, stage) { 
+		outputCardStageListIn[stage] = [];
+		for (let color in colorList) { 
+			for (let i = 0; i < colorList[color]; i++) {
+				outputCardStageListIn[stage].push(outputCardList[color].splice(randomInteger(0, outputCardList[color].length - 1), 1)[0]);
+			}
+			shuffle(outputCardStageListIn[stage]);
+		}
+
+	});
+
+	outputCardStageList = outputCardStageListIn;
+	stage = 0;
+	cardIndex = 0;
+	cardOpened.hidden = true;
+	cardClosed.hidden = false;
+	console.log(outputCardStageList);
 });
+
+
+
+cardClosed.addEventListener("click", function () { 
+	console.log(stage,cardIndex);
+
+	cardOpened.src = outputCardStageList[stage][cardIndex].cardFace;
+	cardNumberOutput[`${stage} ${outputCardStageList[stage][cardIndex].color}`].textContent = +cardNumberOutput[`${stage} ${outputCardStageList[stage][cardIndex].color}`].textContent - 1;
+	cardOpened.hidden = false;
+	cardIndex++;
+
+	if (cardIndex >= outputCardStageList[stage].length) { stage++; cardIndex = 0; }
+	if (stage >= outputCardStageList.length) { cardClosed.hidden = true; }
+});
+
 
 // npx webpack --config webpack.config.js

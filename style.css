@@ -6,7 +6,7 @@
   justify-content: start;
 }
 .wrapper__ancient-field {
-  width: 39%;
+  width: 40%;
 }
 .wrapper__menu {
   width: 22%;
@@ -74,9 +74,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 30px;
 }
-.mysthic-card-field__card-list {
+.mysthic-card-field__card-number-list {
   width: 50%;
+  margin-bottom: 50px;
   font-size: 30px;
 }
 .mysthic-card-field__card-number {
@@ -85,7 +87,7 @@
   display: flex;
   justify-content: space-between;
 }
-.mysthic-card-field__card {
+.mysthic-card-field__card-counter {
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -100,6 +102,14 @@
 }
 .mysthic-card-field .card-blue {
   background-color: blue;
+}
+.mysthic-card-field__card-field {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.mysthic-card-field__card {
+  border-radius: 16px;
 }
 
 * {
