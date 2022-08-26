@@ -1,3 +1,4 @@
+import { max } from "lodash";
 import ancientsData from "../../data/ancients.js";
 import difficulties from "../../data/difficulties.js";
 import { brownCards, blueCards, greenCards } from "../../data/mythicCards/index.js";
@@ -50,6 +51,8 @@ levelList.addEventListener("click", function selectLevel(event) {
 	}
 });
 
+
+
 function randomInteger(min, max) {
 	let rand = min - 0.5 + Math.random() * (max - min + 1);
 	return Math.round(rand);
@@ -57,10 +60,14 @@ function randomInteger(min, max) {
 
 function shuffle(array) {
 	for (let i = array.length - 1; i > 0; i--) {
-		let j = Math.floor(Math.random() * (i + 1));
+		let j = Math.round(Math.random() * (i + 1) - 0.5);//randomInteger(0, i);
 		[array[i], array[j]] = [array[j], array[i]];
 	}
+	return array;
 }
+
+
+
 
 const button = document.querySelector(".button");
 
@@ -76,60 +83,88 @@ button.addEventListener("click", function createColoda() {
 
 	const activeAncient = _.cloneDeep(ancientsData[activeAncientTag.dataset.id]);
 
-	activeAncient.stages.forEach(function (stage, index) {
-		for (let color in stage) {
-			cardNumberOutput[`${index} ${color}`].textContent = stage[color];
-		}
-	});
-
 	const cardListClone = _.cloneDeep(cardList);
 
 	for (let color in cardListClone) {
 		for (let dificulty in cardListClone[color]) {
 			shuffle(cardListClone[color][dificulty]);
+			shuffle(cardListClone[color][dificulty]); // на всякий случай
 		}
 	}
 
-	stageColodaOut = [];
+	const neededCard = {};
+	for (let color in cardListClone) {
+		neededCard[color] = { cardNumber: 0, cardList: [] };
+		neededCard[color].cardNumber = activeAncient.stages.reduce(function (acc, stage, stageIndex) {
 
-	if (activeLevel.dataset.id == "very easy") {
-		for (let stage in activeAncient.stages) {
-			stageColodaOut[stage] = [];
-			for (let color in activeAncient.stages[stage]) {
+			cardNumberOutput[`${stageIndex} ${color}`].textContent = stage[color];
 
-				const neededCardNumber = activeAncient.stages[stage][color];
+			return acc += stage[color];
+		}, 0);
+	}
 
-				const stageColorList = cardListClone[color].easy.splice(0, neededCardNumber);
-
-				if (stageColorList.length < neededCardNumber) {
-					stageColorList.splice(-1, 0, ...cardListClone[color].normal.splice(0, neededCardNumber - stageColorList.length));
-				}
-				stageColodaOut[stage].splice(-1, 0, ...stageColorList);
-				shuffle(stageColodaOut[stage]);
+	if (activeLevel.dataset.id == "very easy") { 
+		for (let color in neededCard) { 
+			let currentCardList = neededCard[color];
+			currentCardList.cardList = shuffle(cardListClone[color].easy).splice(0, currentCardList.cardNumber);
+			if (currentCardList.cardList.length < currentCardList.cardNumber) { 
+				currentCardList.cardList.splice(-1, 0, ...shuffle(cardListClone[color].normal).splice(0, currentCardList.cardNumber - currentCardList.cardList.length));
 			}
+			shuffle(currentCardList.cardList);
+			shuffle(currentCardList.cardList); // на всякий случай
 		}
 	} else if (activeLevel.dataset.id == "easy") {
-		for (let stage in activeAncient.stages) {
-			stageColodaOut[stage] = [];
-			for (let color in activeAncient.stages[stage]) {
-
-				const neededCardNumber = activeAncient.stages[stage][color];
-
-				const stageColorList = cardListClone[color].easy.splice(0, neededCardNumber);
-
-				if (stageColorList.length < neededCardNumber) {
-					stageColorList.splice(-1, 0, ...cardListClone[color].normal.splice(0, neededCardNumber - stageColorList.length));
-				}
-				stageColodaOut[stage].splice(-1, 0, ...stageColorList);
-				shuffle(stageColodaOut[stage]);
+		for (let color in neededCard) {
+			let currentCardList = neededCard[color];
+			//const set = [...cardListClone[color].easy, ...cardListClone[color].normal];
+			currentCardList.cardList = shuffle([...cardListClone[color].easy, ...cardListClone[color].normal]).splice(0, currentCardList.cardNumber);
+			shuffle(currentCardList.cardList);
+			shuffle(currentCardList.cardList); // на всякий случай
+		}
+	}	else if (activeLevel.dataset.id == "normal") {
+		for (let color in neededCard) {
+			let currentCardList = neededCard[color];
+			//const set = [...cardListClone[color].easy, ...cardListClone[color].normal, ...cardListClone[color].hard];
+			currentCardList.cardList = shuffle([...cardListClone[color].easy, ...cardListClone[color].normal, ...cardListClone[color].hard]).splice(0, currentCardList.cardNumber);
+			shuffle(currentCardList.cardList);
+			shuffle(currentCardList.cardList); // на всякий случай
+		}
+	}	else if (activeLevel.dataset.id == "hard") {
+		for (let color in neededCard) {
+			let currentCardList = neededCard[color];
+			//const set = [...cardListClone[color].normal, ...cardListClone[color].hard];
+			currentCardList.cardList = shuffle([...cardListClone[color].normal, ...cardListClone[color].hard]).splice(0, currentCardList.cardNumber);
+			shuffle(currentCardList.cardList);
+			shuffle(currentCardList.cardList); // на всякий случай
+		}
+	} else if (activeLevel.dataset.id == "very hard") {
+		for (let color in neededCard) {
+			let currentCardList = neededCard[color];
+			currentCardList.cardList = shuffle(cardListClone[color].hard).splice(0, currentCardList.cardNumber);
+			if (currentCardList.cardList.length < currentCardList.cardNumber) {
+				currentCardList.cardList.splice(-1, 0, ...shuffle(cardListClone[color].normal).splice(0, currentCardList.cardNumber - currentCardList.cardList.length));
 			}
+			shuffle(currentCardList.cardList);
+			shuffle(currentCardList.cardList); // на всякий случай
 		}
 	}
 
-	stage = 0;
-	cardIndex = 0;
+	//console.log(_.cloneDeep(neededCard));
+
+	stageColodaOut = [];
+	activeAncient.stages.forEach(function (stage, index) { 
+		stageColodaOut[index] = [];
+		for (let color in stage) {
+			stageColodaOut[index].splice(0, 0, ...neededCard[color].cardList.splice(0, stage[color]));
+		}
+		shuffle(stageColodaOut[index]);
+		shuffle(stageColodaOut[index]); // на всякий случай
+	});
+
 	cardOpened.hidden = true;
 	cardClosed.hidden = false;
+	stage = 0;
+	cardIndex = 0;
 });
 
 
@@ -145,48 +180,3 @@ cardClosed.addEventListener("click", function () {
 	if (cardIndex >= stageColodaOut[stage].length) { stage++; cardIndex = 0; }
 	if (stage >= stageColodaOut.length) { cardClosed.hidden = true; }
 });
-
-
-// npx webpack --config webpack.config.js
-
-/*
-
-
-	const nedeedCard = {};
-	for (let key in cardList) {
-		nedeedCard[key] = activeAncient.stages.reduce((acc, numCards) => { return acc += numCards[key] }, 0);
-	}
-
-	const outputCardList = {};
-
-	if (activeLevel.dataset.id == "very easy") {
-		for (let key in cardList) {
-			outputCardList[key] = [...cardList[key].easy];
-			while (outputCardList[key].length > nedeedCard[key]) {
-				outputCardList[key].splice(randomInteger(0, outputCardList[key].length - 1), 1);
-			}
-
-			if (outputCardList[key].length < nedeedCard[key]) {
-				const addCard = [...cardList[key].normal];
-				while (addCard.length > (nedeedCard[key] - outputCardList[key].length)) {
-					addCard.splice(randomInteger(0, addCard.length - 1), 1);
-				}
-				outputCardList[key] = [...outputCardList[key], ...addCard];
-			}
-		}
-
-	}
-
-	const outputCardStageListIn = []
-
-	activeAncient.stages.forEach(function (colorList, stage) {
-		outputCardStageListIn[stage] = [];
-		for (let color in colorList) {
-			for (let i = 0; i < colorList[color]; i++) {
-				outputCardStageListIn[stage].push(outputCardList[color].splice(randomInteger(0, outputCardList[color].length - 1), 1)[0]);
-			}
-			shuffle(outputCardStageListIn[stage]);
-		}
-
-	});
-	*/
