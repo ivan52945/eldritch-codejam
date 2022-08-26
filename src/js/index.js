@@ -88,7 +88,6 @@ button.addEventListener("click", function createColoda() {
 	for (let color in cardListClone) {
 		for (let dificulty in cardListClone[color]) {
 			shuffle(cardListClone[color][dificulty]);
-			shuffle(cardListClone[color][dificulty]); // на всякий случай
 		}
 	}
 
@@ -111,31 +110,26 @@ button.addEventListener("click", function createColoda() {
 				currentCardList.cardList.splice(-1, 0, ...shuffle(cardListClone[color].normal).splice(0, currentCardList.cardNumber - currentCardList.cardList.length));
 			}
 			shuffle(currentCardList.cardList);
-			shuffle(currentCardList.cardList); // на всякий случай
+			//shuffle(currentCardList.cardList); // на всякий случай
 		}
 	} else if (activeLevel.dataset.id == "easy") {
 		for (let color in neededCard) {
 			let currentCardList = neededCard[color];
 			//const set = [...cardListClone[color].easy, ...cardListClone[color].normal];
 			currentCardList.cardList = shuffle([...cardListClone[color].easy, ...cardListClone[color].normal]).splice(0, currentCardList.cardNumber);
-			shuffle(currentCardList.cardList);
-			shuffle(currentCardList.cardList); // на всякий случай
 		}
 	}	else if (activeLevel.dataset.id == "normal") {
 		for (let color in neededCard) {
 			let currentCardList = neededCard[color];
 			//const set = [...cardListClone[color].easy, ...cardListClone[color].normal, ...cardListClone[color].hard];
 			currentCardList.cardList = shuffle([...cardListClone[color].easy, ...cardListClone[color].normal, ...cardListClone[color].hard]).splice(0, currentCardList.cardNumber);
-			shuffle(currentCardList.cardList);
-			shuffle(currentCardList.cardList); // на всякий случай
 		}
 	}	else if (activeLevel.dataset.id == "hard") {
 		for (let color in neededCard) {
 			let currentCardList = neededCard[color];
 			//const set = [...cardListClone[color].normal, ...cardListClone[color].hard];
 			currentCardList.cardList = shuffle([...cardListClone[color].normal, ...cardListClone[color].hard]).splice(0, currentCardList.cardNumber);
-			shuffle(currentCardList.cardList);
-			shuffle(currentCardList.cardList); // на всякий случай
+
 		}
 	} else if (activeLevel.dataset.id == "very hard") {
 		for (let color in neededCard) {
@@ -144,12 +138,10 @@ button.addEventListener("click", function createColoda() {
 			if (currentCardList.cardList.length < currentCardList.cardNumber) {
 				currentCardList.cardList.splice(-1, 0, ...shuffle(cardListClone[color].normal).splice(0, currentCardList.cardNumber - currentCardList.cardList.length));
 			}
-			shuffle(currentCardList.cardList);
-			shuffle(currentCardList.cardList); // на всякий случай
 		}
 	}
 
-	//console.log(_.cloneDeep(neededCard));
+	//console.log(_.cloneDeep(neededCard.brown.cardList));
 
 	stageColodaOut = [];
 	activeAncient.stages.forEach(function (stage, index) { 
@@ -158,10 +150,9 @@ button.addEventListener("click", function createColoda() {
 			stageColodaOut[index].splice(0, 0, ...neededCard[color].cardList.splice(0, stage[color]));
 		}
 		shuffle(stageColodaOut[index]);
-		shuffle(stageColodaOut[index]); // на всякий случай
 	});
 
-	console.log(_.cloneDeep(stageColodaOut));
+	//console.log(_.cloneDeep(stageColodaOut));
 
 	cardOpened.hidden = true;
 	cardClosed.hidden = false;
@@ -182,3 +173,6 @@ cardClosed.addEventListener("click", function () {
 	if (cardIndex >= stageColodaOut[stage].length) { stage++; cardIndex = 0; }
 	if (stage >= stageColodaOut.length) { cardClosed.hidden = true; }
 });
+
+
+//npx webpack --config webpack.config.j
