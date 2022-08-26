@@ -60,7 +60,7 @@ function randomInteger(min, max) {
 
 function shuffle(array) {
 	for (let i = array.length - 1; i > 0; i--) {
-		let j = Math.round(Math.random() * (i + 1) - 0.5);//randomInteger(0, i);
+		let j = Math.floor(Math.random() * (i + 1));//randomInteger(0, i);
 		[array[i], array[j]] = [array[j], array[i]];
 	}
 	return array;
@@ -160,6 +160,8 @@ button.addEventListener("click", function createColoda() {
 		shuffle(stageColodaOut[index]);
 		shuffle(stageColodaOut[index]); // на всякий случай
 	});
+
+	console.log(_.cloneDeep(stageColodaOut));
 
 	cardOpened.hidden = true;
 	cardClosed.hidden = false;
